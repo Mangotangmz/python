@@ -1,0 +1,71 @@
+
+{% extends 'web/base_main.html' %}
+
+{% block title %}
+  王海飞个人博客 - 一个肥宅的个人博客网站
+{% endblock %}
+
+{% block extcss %}
+  {% load static %}
+  <link href="{% static 'web/css/base.css' %}" rel="stylesheet">
+  <link href="{% static 'web/css/index.css' %}" rel="stylesheet">
+  <link href="{% static 'web/css/m.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block extjs %}
+     {% load static %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'web/js/comm.js' %}"></script>
+    <script src="{% static 'web/js/modernizr.js' %}"></script>
+    <script type="text/javascript" src="{% static 'web/js/hc-sticky.js' %}"></script>
+
+    <script>
+
+
+    </script>
+{% endblock %}
+
+
+{% block aboutme %}
+<div class="about_me">
+    <h2>关于我</h2>
+    <ul>
+        <i style="width:20%; height:20%;"><img src="/static/web/images/git_logo.png"></i>
+        <p>
+            <b>github地址:</b><br/>
+            <a href="https://github.com/coco369/" target="_blank">https://github.com/coco369/</a>
+        </p>
+    </ul>
+</div>
+{% endblock %}
+
+
+{% block main %}
+
+  <main class="r_box">
+      <input type="hidden" value="about" id="title_id">
+     <div class="about">
+      <p>王海飞，男，一个90后程序员！14年入行。先后经历过几家大型的公司，主要做Python后端研发工作。
+          经历过O2O商城，大型ERP系统，全国最大的车辆网项目等<br/>
+           <br />
+            目前就职于一家教育机构，主要培训Python相关的课程。开发该个人博客网站主要是给学生参考，也是用于记录每天的学习笔记和心得等。
+          好记性不如烂笔头，这句话，在教学的生涯中让我深刻的领会到其中的奥义。该博客网站每天都会有新的文章分享，尽情期待！<br />
+            <br />
+    近几年来忙于做开发工作，很多的技术也都是不够深入，甚至很多技术都是浅尝即止。由于开发任务比较繁重，个人笔记也都记录在CSDN、github、gitee上
+          ，以至于都没有详细的整理出来，感觉省事惭愧。<br />
+            <br />
+
+          <h2>About my blog</h2>
+          &nbsp;
+          <p>域 名：www.vincent-whf.com 创建于2017年01月12日&nbsp;</p>
+          <br />
+          <!--<p>备案号：蜀ICP备11002373号-1</p>-->
+          <!--<br />-->
+          <p>开发语言：Python3.7</p>
+          <br />
+          <p>框架：Django2.0.7</p>
+
+     </div>
+  </main>
+
+{% endblock %}

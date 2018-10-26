@@ -1,0 +1,13 @@
+
+{% extends 'backweb/base.html' %}
+
+{% block header %}
+    <header>
+        <h1><img src="/static/backweb/images/admin_logo.png"/></h1>
+        <ul class="rt_nav">
+            <li><a href="{% url 'blog:index' %}" target="_blank" class="website_icon">站点首页</a></li>
+            <li><a href="{% url 'backweb:change_pwd' %}" class="set_icon">账号设置</a></li>
+            <li><a href="{% url 'backweb:logout' %}" class="quit_icon">安全退出</a></li>
+        </ul>
+    </header>
+{% endblock %}

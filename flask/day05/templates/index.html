@@ -1,0 +1,10 @@
+{% extends 'base.html'%}
+{% block content%}
+<p>我是首页</p>
+  <p>当前用户{{current_user.username}}</p>
+<img src="/static/media/{{current_user.icons}}" alt="">
+<form action="" method="post" enctype="multipart/form-data">
+    头像;<input type="file" name="icons">
+    <input type="submit" value="提交">
+</form>
+{% endblock %}

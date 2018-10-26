@@ -1,0 +1,98 @@
+
+{% extends 'backweb/base_main.html' %}
+{% block title %}
+ 后台管理系统
+{% endblock %}
+
+
+{% block extcss %}
+ {% load static %}
+ <link rel="stylesheet" type="text/css" href="{% static 'backweb/css/style.css' %}">
+{% endblock %}
+
+{% block extjs %}
+ {% load static %}
+ <script src="{% static 'backweb/js/html5.js' %}"></script>
+ <script src="{% static 'backweb/js/jquery.js' %}"></script>
+ <script src="{% static 'backweb/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+ <script>
+
+     (function($){
+         $(window).load(function(){
+
+             $("a[rel='load-content']").click(function(e){
+                 e.preventDefault();
+                 var url=$(this).attr("href");
+                 $.get(url,function(data){
+                     $(".content .mCSB_container").append(data); //load new content inside .mCSB_container
+                     //scroll-to appended content
+                     $(".content").mCustomScrollbar("scrollTo","h2:last");
+                 });
+             });
+
+             $(".content").delegate("a[href='top']","click",function(e){
+                 e.preventDefault();
+                 $(".content").mCustomScrollbar("scrollTo",$(this).attr("href"));
+             });
+
+         });
+     })(jQuery);
+ </script>
+
+<script>
+    function get_ctype(){
+        var atype_id = $('#atype').val()
+        $.get('/backweb/get_ctypes/?f_id=' + atype_id, function(data){
+            ctype_options = ''
+            for(var i=0; i<data.c_types.length; i++){
+                ctype_option = '<option value="' + data.c_types[i].id + '">' + data.c_types[i].types + '</option>'
+                ctype_options += ctype_option
+            }
+            $('#select_lang').html(ctype_options)
+        })
+    }
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+{% include 'backweb/menu.html' %}
+
+<section class="rt_wrap content mCustomScrollbar">
+    <div class="rt_content">
+
+        <div class="page_title">
+            <h2 class="fl">添加文章</h2>
+        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <section>
+
+                <ul class="ulColumn2">
+                    <li>
+                        <span class="item_name" style="width:120px;">账号：</span>
+                        {{ user.username }}
+                    </li>
+                    <li>
+                        <span class="item_name" style="width:120px;">密码：</span>
+                        <input type="password" class="textbox textbox_295" name="passwd1" placeholder="密码..."/>
+                        <span class="errorTips">{{ error.passwd1|striptags }}</span>
+                    </li>
+                    <li>
+                        <span class="item_name" style="width:120px;">确认密码：</span>
+                        <input type="password" class="textbox textbox_295" name="passwd2" placeholder="确认密码..."/>
+                        <span class="errorTips">{{ error.passwd2|striptags }}</span>
+                    </li>
+                    <li>
+                        <span class="item_name" style="width:120px;"></span>
+                        <input type="submit" class="link_btn"/>
+                   </li>
+                </ul>
+            </section>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

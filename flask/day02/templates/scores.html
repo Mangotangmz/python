@@ -1,0 +1,30 @@
+{% extends 'base_main.html' %}
+{% block cotent %}
+
+    {% from 'function.html' import hello %}
+    {{ hello() }}
+
+    {% from 'function.html' import say %}
+    {{ say('小李') }}
+
+
+
+
+    {#    过滤器，safe,关闭自动转义#}
+    {{ cotent_h2 | safe }}
+    {{ cotent_h2 | safe | length }}
+    {#    #}
+    {{ cotent_h2 | striptags }}
+    {{ stu_scores }}
+    {% for scores in stu_scores %}
+        {# loop.first:循环的第一次
+          loop.index,字典生成序号
+
+        #}
+        <p {% if loop.first %} style="color: aqua" {% endif %}>
+            序号：{{ loop.index }}
+            成绩：{{ scores }}
+            循环：{{ loop.first }}
+        </p>
+    {% endfor %}
+{% endblock %}

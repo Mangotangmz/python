@@ -1,0 +1,10 @@
+{#    宏定义：无参情况 #}
+    {% macro hello() %}
+        <p>你好</p>
+    {% endmacro %}
+
+
+    {# 宏定义:有参情况    #}
+    {% macro say(name) %}
+        <p>你好， {{ name }}</p>
+    {% endmacro %}

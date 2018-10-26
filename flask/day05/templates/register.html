@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+{% block content %}
+<form action="" method="post">
+    {{ form.csrf_token }}
+    {{form.username.lable}}{{form.username}}
+    {{form.password.lable}}{{form.password}}
+    {{form.password2.lable}}{{form.password2}}
+    {{ form.submit }}
+
+    {% if form.errors %}
+    姓名错误信息:{{ form.errors.username }}
+    密码错误信息:{{ form.errors.password2 }}
+    {% endif %}
+</form>
+
+
+{% endblock %}

@@ -1,0 +1,27 @@
+
+<aside class="lt_aside_nav content mCustomScrollbar">
+    <h2><a href="{% url 'backweb:index' %}">首页</a></h2>
+    <ul>
+        <li>
+            <dl>
+                <dt>我的笔记</dt>
+        <!--当前链接则添加class:active-->
+                <dd><a href="{% url 'backweb:index' %}?art_is_show=0" {% if is_show == '0' %} class="active" {% endif %}>文章列表(不展示)</a></dd>
+            </dl>
+        </li>
+        <li>
+            <dl>
+                <dt>文章管理</dt>
+        <!--当前链接则添加class:active-->
+                <dd><a href="{% url 'backweb:index' %}?art_is_show=1" {% if is_show == '1' %} class="active" {% endif %}>文章展示</a></dd>
+                <dd><a href="{% url 'backweb:index' %}?art_is_recommend=1" {% if is_recommend %} class="active" {% endif %}>文章推荐</a></dd>
+            </dl>
+        </li>
+        <li>
+            <dl>
+                <dt>用户管理</dt>
+                <dd><a href="{% url 'backweb:change_pwd' %}">修改密码</a></dd>
+            </dl>
+        </li>
+    </ul>
+</aside>

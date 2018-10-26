@@ -1,0 +1,174 @@
+
+{% extends 'backweb/base_main.html' %}
+{% block title %}
+ 后台管理系统
+{% endblock %}
+
+
+{% block extcss %}
+ {% load static %}
+ <link rel="stylesheet" type="text/css" href="{% static 'backweb/css/style.css' %}">
+{% endblock %}
+
+{% block extjs %}
+ {% load static %}
+ <script src="{% static 'backweb/js/html5.js' %}"></script>
+ <script src="{% static 'backweb/js/jquery.js' %}"></script>
+ <script src="{% static 'backweb/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+ <script>
+
+    function get_ctype(){
+        var atype_id = $('#atype').val()
+        $.get('/backweb/get_ctypes/?f_id=' + atype_id, function(data){
+            ctype_options = '<option value="">请选择分类</option>'
+            for(var i=0; i<data.c_types.length; i++){
+                ctype_option = '<option id="lang_' + data.c_types[i].id + '" value="' + data.c_types[i].id + '">' + data.c_types[i].types + '</option>'
+                ctype_options += ctype_option
+            }
+            $('#select_lang').html(ctype_options)
+        })
+    }
+
+    $.get('/backweb/get_ctypes/?f_id=' + {{ atypes.0.id }}, function(data){
+        ctype_options = '<option value="">请选择分类</option>'
+        for(var i=0; i<data.c_types.length; i++){
+            ctype_option = '<option id="lang_' + data.c_types[i].id + '" value="' + data.c_types[i].id + '">' + data.c_types[i].types + '</option>'
+            ctype_options += ctype_option
+        }
+        $('#select_lang').html(ctype_options)
+    })
+
+    function article_delete(aid){
+        var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+        $.ajax({
+            url: '/backweb/del_article/' + aid + '/',
+            dataType:'json',
+            type:'POST',
+            headers:{'X-CSRFToken': csrf},
+            success:function(data){
+                if(data.code == '200'){
+                    location.href='/backweb/index/'
+                }
+            },
+            error: function(data){
+                alert('删除成功')
+            }
+        })
+    }
+
+    function change_search(){
+        var atype_id = $('#select_lang option:selected').val()
+        $('.search_types').attr('href', '/backweb/index/?ctype_id=' + atype_id)
+    }
+
+    <!--实现点击分页跳转地址-->
+    function search_page(page_number){
+        if(location.search.split('&page')[0]){
+            page_prefix = location.href.split('&page=')[0]
+            url = page_prefix + '&page=' + page_number
+            location.href = url
+        }
+    }
+
+
+ </script>
+{% endblock %}
+
+{% block content %}
+
+{% include 'backweb/menu.html' %}
+
+<section class="rt_wrap content mCustomScrollbar">
+    <div class="rt_content">
+        <h1 style="color:red;font-size:20px;font-weight:bold;text-align:center;">
+            笔记列表页
+        </h1>
+
+        <div class="page_title">
+            <h2 class="fl">
+                文章列表
+                {% if select_lang_name %}
+                ----> 当前分类：{{ select_lang_name }}
+                {% endif %}
+            </h2>
+            <a href="{% url 'backweb:add_article' %}" class="fr top_rt_btn add_icon">添加文章</a>
+        </div>
+        <form action="" method="get">
+            <section class="mtb">
+                {% if is_show %}
+                <input type="hidden" name="art_is_show" value="{{ is_show }}">
+                {% endif %}
+                {% if is_recommend %}
+                <input type="hidden" name="art_is_recommend" value="{{ is_recommend }}">
+                {% endif %}
+                <select class="select" id="atype" onchange="get_ctype();">
+                    {% for atype in atypes %}
+                        <option value="{{ atype.id }}">{{ atype.types }}</option>
+                    {% endfor %}
+                </select>
+                <select class="select" id="select_lang" name="select_lang">
+                </select>
+                {% if page %}
+                <input type="hidden" name="page" value="{{ page }}">
+                {% endif %}
+                <a href="" class="search_types">
+                    <input type="submit" value="查询" class="group_btn"/>
+                </a>
+            </section>
+        </form>
+        <table class="table">
+            <tr>
+                <th>编号ID</th>
+                <th>文章名称</th>
+                <th>文章描述</th>
+                <th>类型</th>
+                <th>是否展示</th>
+                <th>是否推荐</th>
+                <th>创建时间</th>
+                <th>展示/不展示操作</th>
+                <th>是否推荐</th>
+                <th>编辑操作</th>
+            </tr>
+            {% for article in articles %}
+                <tr>
+                    <td class="center">{{ article.id }}</td>
+                    <td class="center">{{ article.title }}</td>
+                    <td class="center">{{ article.desc }}</td>
+                    <td class="center">{{ article.types.types }}</td>
+                    <td class="center">{% if article.is_show %} 展示 {% else %} 不展示 {% endif %}</td>
+                    <td class="center">{% if article.is_recommend %} 推荐 {% else %} 不推荐 {% endif %}</td>
+                    <td class="center">{{ article.create_time }}</td>
+                    {% csrf_token %}
+                    <td class="center">
+                        {% if article.is_show %}
+                            <a href="{% url 'backweb:change_art_show' article.id %}">不展示</a>
+                        {% else %}
+                            <a href="{% url 'backweb:change_art_show' article.id %}">展示</a>
+                        {% endif %}
+                    </td>
+                    <td class="center">
+                        {% if article.is_recommend %}
+                            <a href="{% url 'backweb:change_art_recommend' article.id %}">不推荐</a>
+                        {% else %}
+                            <a href="{% url 'backweb:change_art_recommend' article.id %}">推荐</a>
+                        {% endif %}
+                    </td>
+                    <td class="center">
+                        <a href="{% url 'backweb:edit_article' article.id %}" title="编辑" class="link_icon">&#101;</a>
+                        <a onclick="article_delete({{ article.id }});" title="删除" class="link_icon">&#100;</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <aside class="paging">
+            <a>当前{{ articles.number }}页</a>
+            <a href="javascript:;" onclick="search_page(1)">第一页</a>
+            {% for i in articles.paginator.page_range %}
+                <a href="javascript:;" onclick="search_page({{ i }})"> {{ i }} </a>
+            {% endfor %}
+            <a href="javascript:;" onclick="search_page({{ articles.paginator.num_pages }})">最后一页</a>
+        </aside>
+ </div>
+</section>
+
+{% endblock %}

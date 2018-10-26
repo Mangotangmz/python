@@ -1,0 +1,65 @@
+
+{% extends 'backweb/base.html' %}
+
+{% block title %}
+ 后台登录
+{% endblock %}
+
+{% block extcss %}
+ {% load static %}
+ <link rel="stylesheet" type="text/css" href="{% static 'backweb/css/style.css' %}">
+ <link rel="stylesheet" type="text/css" href="{% static 'backweb/css/login.css' %}">
+
+{% endblock %}
+
+{% block extjs %}
+ {% load static %}
+ <script src="{% static 'backweb/js/jquery.js' %}"></script>
+ <script src="{% static 'backweb/js/verificationNumbers.js' %}"></script>
+ <script src="{% static 'backweb/js/Particleground.js' %}"></script>
+
+ <script>
+ $(document).ready(function() {
+   //粒子背景特效
+   $('body').particleground({
+     dotColor: '#5cbdaa',
+     lineColor: '#5cbdaa'
+   });
+   //验证码
+   createCode();
+   //测试提交，对接程序删除即可
+   $(".submit_btn").click(function(){
+       location.href="index.html";
+       });
+ });
+ </script>
+{% endblock %}
+
+
+
+{% block content %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    <dl class="admin_login">
+        <dt>
+            <strong>博客站点后台管理系统</strong>
+            <em>Blog Management System</em>
+        </dt>
+        {{ error.username }}
+        <dd class="user_icon">
+            <input type="text" name="username" placeholder="账号" class="login_txtbx"/>
+        </dd>
+        <dd class="pwd_icon">
+            <input type="password" name="password" placeholder="密码" class="login_txtbx"/>
+        </dd>
+        <dd>
+            <input type="submit" value="立即登录" class="submit_btn"/>
+        </dd>
+        <dd>
+            <p>© 王海飞个人博客官方后台</p>
+            <p></p>
+        </dd>
+    </dl>
+</form>
+{% endblock %}

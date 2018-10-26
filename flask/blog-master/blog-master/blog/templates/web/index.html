@@ -1,0 +1,46 @@
+
+{% extends 'web/base_main.html' %}
+
+{% block title %}
+  王海飞个人博客 - 一个肥宅的个人博客网站
+{% endblock %}
+
+{% block extcss %}
+  {% load static %}
+  <link href="{% static 'web/css/base.css' %}" rel="stylesheet">
+  <link href="{% static 'web/css/index.css' %}" rel="stylesheet">
+  <link href="{% static 'web/css/m.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block extjs %}
+  {% load static %}
+    {{ block.super }}
+  <script type="text/javascript" src="{% static 'web/js/comm.js' %}"></script>
+  <script src="{% static 'web/js/modernizr.js' %}"></script>
+{% endblock %}
+
+
+{% block aboutme %}
+<div class="about_me">
+    <h2>关于我</h2>
+    <ul>
+        <i style="width:50%; height:50%;"><img src="/static/web/images/blog_avatar.png"></i>
+        <p><b>王海飞</b>，一个90后典型的程序开发人员！14年入行。一直潜心研究Python技术，一边工作一边积累经验，分享一些开发中整理的笔记。</p>
+    </ul>
+</div>
+{% endblock %}
+
+
+{% block main %}
+    <main class="r_box">
+        {% for article in articles %}
+            <li>
+                <h3><a href="{% url 'blog:info' article.id %}">{{ article.title }}</a></h3>
+                <p>{{ article.desc }}</p>
+            </li>
+        {% endfor %}
+    </main>
+
+{% endblock %}
+
+
