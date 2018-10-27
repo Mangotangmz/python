@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+
+{% block title %}
+    登录
+{% endblock %}
+{% block content %}
+    <form action="" method="post">
+        name:<input type="text" name="username">
+        password<input type="password" name="password">
+{#        <input type="password",name="password2">#}
+        <input type="submit" value="提交">
+        <p><a href="">注销</a></p>
+    </form>
+{% endblock %}

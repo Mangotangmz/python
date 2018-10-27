@@ -1,0 +1,4 @@
+30 django.request 2018-09-20 10:28:29,548 Not Found: /
+30 django.request 2018-09-20 10:28:29,809 Not Found: /favicon.ico
+30 django.request 2018-09-20 10:28:40,129 Not Found: /users/login/
+20 users.views 2018-09-20 10:28:43,490 index·½·¨

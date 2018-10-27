@@ -1,0 +1,24 @@
+
+{% extends 'base.html' %}
+{% block title %}
+    查找信息
+{% endblock %}
+
+{% block content%}
+<table>
+    <th>id</th>
+    <th>name</th>
+    <th>age</th>
+    <th>sex</th>
+    <tbody>
+    <tr>
+        <td>{{ Students.id }}</td>
+        <td>{{ Students.s_name }}</td>
+        <td>{{ Students.s_age}}</td>
+        <td>{{ Students.s_sex }}</td>
+        <td>{{ Students.createi_time}}</td>
+
+    </tr>
+    </tbody>
+</table>
+{% endblock %}

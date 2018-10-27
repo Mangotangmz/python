@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>添加</title>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" >
+    function update_stu(){
+        var name = $('#name').val()
+        var age = $('#age').val()
+        var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+        $.ajax({
+        url:'/app/student/',
+        type:'POST',
+        dataType:'json',
+        data:{'s_name':name,'s_age':age},
+        headers:{'X-CSRFToken':csrf},
+        success:function(data) {
+          console.log(data)
+        },
+        error:function(data) {
+          alert('请求失败')
+        }
+        })
+
+    }
+</script>
+</head>
+<body>
+{% csrf_token  %}
+<p>姓名： <input id="name" type="text" name="name"></p>
+<p>年龄： <input id='age' type="text" name ='age'></p>
+<p><input type="submit" onclick="update_stu()" value="提交"></p>
+</body>
+
+</html>

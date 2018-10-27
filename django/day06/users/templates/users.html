@@ -1,0 +1,37 @@
+{% block content %}
+    <p>当前注册用户</p>
+    <table>
+        <thead>
+            <th>id</th>
+            <th>用户名</th>
+            <th>创建时间</th>
+        </thead>
+        <tbody>
+            {% for u in page %}
+                <tr>
+                    <td>{{ u.id }}</td>
+                    <td>{{ u.username }}</td>
+                    <td>{{ u.create_time }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>当前页{{ page.number }}</p>
+    <p>页码:
+    {% for i in page.paginator.page_rang %}
+        <a href="{% url 'users:users' %}?page={{i}} ">{{ i }}</a>
+    </p>
+    {% endfor %}
+
+<p>
+    {% if page.has_previous %}
+    <a href="{% url 'users:users' %}?page={{ page.previous_page_number }}">上一页</a>
+    {% endif %}
+
+    {% if page.has_next %}
+    <a href="{% url 'users:users' %}?page={{ page.next_page_number }}">下一页</a>
+    {% endif %}
+
+
+</p>
+{% endblock %}

@@ -1,0 +1,48 @@
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title></title>
+ <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+ <script >
+ function get_stus(){
+    $.ajax({
+        url:'/app/student/',
+        type:'GET',
+        dataType:'json',
+        success:function(data) {
+            var results = data.results
+            console.log(results)
+            for(var i=0;i<results.length,i++;){
+                 var c_stu = '<p>id:' + result[i].id + ' name:' + result[i].s_name + ' </p>'
+                 $('#content').append(c_stu)
+            }
+        },
+        error:function(data) {
+            alert('请求失败')
+
+        }
+        //
+        // $.get('/app/student/',function() {
+        //     console(data)
+        //
+        // })
+
+
+ })
+ }
+
+</script>
+
+
+</head>
+<body>
+ <input type="button" value="获取学生信息" onclick="get_stus();">
+  <a href="{% url 'app:add' %}">添加学生</a>
+
+
+ <div id="content">
+
+</div>
+
+</body>
+</html>

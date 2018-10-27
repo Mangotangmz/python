@@ -1,0 +1,50 @@
+
+{% extends 'base_main.html' %}
+{% block title %}
+    学生列表
+{% endblock %}
+
+{% block extJS %}
+    {{block.super}}
+   <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+{% endblock %}
+
+{% block content %}
+    <!--{% for stu in Students %}-->
+        <!--<p>姓名：{{stu.s_name}}</p>-->
+    <!--{% endfor %}-->
+
+<table>
+    {{ s|safe }}
+    <thead>
+        <th>seq</th>
+        <th>id</th>
+        <th>name</th>
+        <th>age</th>
+        <th>时间</th>
+        <th>操作</th>
+    </thead>
+
+    <tbody>
+        {{ s|safe }}
+        {% for stu in Students %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{ stu.id }}</td>
+            <td>{{ stu.s_name|length}}</td>
+            <td>{{ stu.s_age|add:10 }}</td>
+            <td>{{ stu.create_time|date }}</td>
+            <!--<td><a href="/app4/del_stu/?id={{ stu.id }}">删除</a>-->
+            <td><a href="{% url 'app4:del_stu' stu.id %}?id={{ stu.id }}">删除</a>
+
+                |
+                <a href="{% url 'app4:check' stu.id %}?id={{ stu.id }}">查看</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+
+</table>
+{% endblock %}
+
+

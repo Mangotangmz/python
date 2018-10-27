@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+
+    </title>
+    {% load static %}
+    <!--<link rel="stylesheet" href="/static/css/index.css">-->
+    <!--<script src="/satic/js/xxx.js" >-->
+
+    <link rel="stylesheet" href="{% static ’css/index.css‘ %}">
+
+</head>
+<body>
+
+
+<h2>你好</h2>
+
+{{ students }}
+<table>
+    <thead>
+        <th>seq</th>
+        <th>id</th>
+        <th>name</th>
+        <th>age</th>
+    </thead>
+
+    <tbody>
+        {% for stu in Students %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{ stu.id }}</td>
+            <td {% if stu.id == 2 %} style="color:red";{% endif %}>{{ stu.s_name}}</td>
+            <td {% if forloop.first %} style="color:red;" {% endif %}>{{ stu.s_age }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+
+</table>
+
+
+
+</body>
+</html>

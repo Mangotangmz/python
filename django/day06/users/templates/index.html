@@ -1,0 +1,12 @@
+
+{% extends 'base.html' %}
+{% block title %}
+    首页
+{% endblock %}
+
+{% block content %}
+<p>我是首页，我需要登录成功才能看到，用户:{{ user.username }}  </p>
+<p>图片：<img src="/media/{{ user.icon }}"></p>
+
+    <p><a href="{% url 'users:logout' %}"> 注销 </a></p>
+{% endblock %}
